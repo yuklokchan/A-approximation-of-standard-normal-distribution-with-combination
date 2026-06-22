@@ -1,0 +1,165 @@
+\documentclass{report}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{hyperref}
+
+\title{\textbf{Approximation of standard normal distribution with combination}}
+\author{Chan Yuk Lok}
+\date{June 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+Combination function ,$^nC_r$ or $\binom{n}{r}$ is one of the basic function used in probability distribution, they are able to calculate the possible combination of $n$ object from $r$ object.
+
+Standard normal distribution, often denote by the function $\phi(z)$ is the fundamental function to simplify complex integral of PDF which do not have elementary integral solve. How ever, the function $\phi(z)$ do not have elementary integral solve too. Therefore, in this report I am trying approximate $\phi(z)$  with combination.
+
+I start doing research on this topic because of when I am researching about a identity about relationship between sine and combination, I try to change value of $n$ and $r$ in desmos. Then I soon realize that for some specific value of $n$ and $r$ the curve is peaked in $x=0$ and become closer and closer to zero in a wavy form. Afterward, I am learning 9709 paper 5, I learn about the standard normal distribution and realize is very similar to the curve that I have seen. That the reason why I start the research.
+
+\section{Math symbol clarification}
+\[
+X\sim{N(\mu,\sigma^2)}
+\] mean $X$ is normal distributed with the mean $\mu$ and standard deviation $\sigma$
+\[
+x! = x\cdot(x-1)\cdot(x-2) .........2\cdot1=\Gamma(x+1)
+\]
+\[
+\Gamma(x)=(x-1)!=\int_0^{\infty}t^{x-1}e^{-5} dt
+\]
+\[
+^nC_r=\binom{n}{r}=\frac{n!}{r!(n-r)!}
+\]
+\[
+\phi(x)=\frac{1}{\sqrt{2\pi}}e^{-\frac{1}{2}x^2}
+\]
+\[
+C(x)=\binom{0}{x}
+\]
+which could be simplify with the Euler’s Reflection Formula to 
+\[
+C(x)=\frac{\sin(\pi x)}{\pi x}
+\]
+
+\[
+c=\frac{\sqrt{3}}{\pi}
+\]
+\newpage
+\section{Approximation with combination}
+look at the image below, the is the graph of the function $C(x)$ with the analytic continuous with the gamma function.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{graph.png}
+    \caption{The graph of the function $f(x)=\binom{0}{x}$}
+    \label{fig:my_image}
+\end{figure}
+
+Notice that it is really similar to the standard normal curve which are show-en in the image below. 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{2nd grapg.png}
+    \caption{The graph of the function $f(x)=\binom{0}{x}$ which are in blue and $\phi(x)$ which are in red}
+    \label{fig:my_image2}
+\end{figure}
+
+This mean we could do some transformation to the graph by those operation
+
+$f(x-a)+b$ mean to transform $f(x)$ by the vector $\binom{a}{b}$
+
+$kf(cx)$ mean to  stretch f(x) $\frac{1}{c}$ horizontally, and $k$ vertically.
+
+\newpage
+At first, we will adjust the peak of the curve, the curve of $\phi(x)$ has a peak on $(0,\frac{1}{\sqrt{2\pi}}$ which is similar to $(0,0.4)$, so we can transform $C(x)$ by the multiplier $\frac{1}{\sqrt{2\pi}}$ or $0.4$ since this is a approximation. the graph in showed in the image below.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{3rd graph.png}
+    \caption{The graph of the function $\frac{1}{\sqrt{2\pi}}C(x)$ which are in blue and $\phi(x)$ which are in red}
+    \label{fig:my_image}
+\end{figure}
+
+How ever, the slope of the curve is different which mean they are very different in point not $0,\frac{1}{\sqrt{2\pi}}$. This mean we need to do a horizontal sketch to the function by the scale factor $c$, the proof of why $c$ is the best factor is in the \hyperlink{app:math}{mathematic appendix}
+
+The image of the graph are showed below
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{4th graph.png}
+    \caption{The graph of the function $\frac{1}{\sqrt{2\pi}}C(\frac{1}{2}x)$ which are in blue and $\phi(x)$ which are in red}
+    \label{fig:my_image}
+\end{figure}
+
+And the approximation can be simplify by the Euler's Reflection Formula to
+\[
+\phi(x)\approx \frac{\sin(x\sqrt{3})}{x\sqrt{6\pi}}
+\]
+\section{Verification of the approximation}
+We could verify the accuracy of the function by setting a error function, $E(x)$, where 
+\[
+E(x)=\lvert\phi(x)-\frac{1}{\sqrt{2\pi}}C(cx) \rvert
+\]
+Then with some calculation which is too hard for me to calculate as I am not familiar with gamma function, we  could get 
+\[\max{E(x)}= 0.094419..... \]
+which occurred at $x=\pm 2.746926.....$ This mean the maximum error is small, with 
+\[
+x\to \pm \infty, E(x)\to 0
+\]
+So the error of the approximation is not big, and actually can be reduce with the change of $0.5$ to other value, for example, the image below is graph of changing $0.5$ to $0.4$
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{5th graph.png}
+    \caption{The graph of the function $\frac{1}{\sqrt{2\pi}}C(0.4x)$ which are in blue and $\phi(x)$ which are in red}
+    \label{fig:my_image}
+\end{figure}
+
+which has a bigger error when it is close to $x=0$ but less error when $x\notin [-2,2]$
+\section{Limitation of the approximation}
+\subsection{Accuracy}
+The function $\phi(x)$ are normally use for probability density function(PDF) which is strictly in the range
+\[
+0\le P(X)\le1
+\]
+And error of $0.1$ can cause big error as it is a integral which calculate the area below the curve and it could cause error that mislead the decision making. For example in this question:
+
+The random variable $X$ follows a normal distribution of $X\sim N(0,1)$, find $P(0.1\le X \le 1)$.
+
+If we use the approximation, $P(0.1\le X \le 1)$ will be
+\[
+\int_{0.1}^1\frac{\sin(x\sqrt{3})}{x\sqrt{6\pi}}dx=0.2983...
+\]
+while the true value is 
+\[
+P(0.1\le X \le 1)=0.30151.....
+\]
+which is small but will affect strict calculation where error allowed is small.
+\subsection{Complexity of function}
+The function $\frac{\sin(x\sqrt{3})}{x\sqrt{6\pi}}$ do not have a ordinary integral solve, which make it also hard to integrate, however, using u-sub, we could integrate it with the Sine Integral function which ain't normally in a scientific calculator, making the use of the approximation not big. Also, because the approximation has the domain $x\ne 0$, making any calculation with $x=0$ improper integral. In addition, some interval might give out negative value which mean nothing in probability.
+\section{Conclusion}
+This approximation provide a great alternative to the standard normal distribution function which is simpler with a not big error. Also it could explain the relationship between SND and binominal distribution which is often taught in textbook. However, the approximation is not as useful as it has the maximum error of 0.1 and it require the sine integral function to calculate. Anyway this is a pretty unique and fun approximation.
+\section{Mathematic appendix}
+\subsection{Finding the best scale factor for horizontal}
+\label{app:math} 
+\hypertarget{app:math}{} % 
+using Taylor expansion, we could expand $\phi(x)$ and $\frac{1}{\sqrt{2\pi}}C(kx)$ where $k$ is a real number to
+\[
+\phi(x)=\frac{1}{\sqrt{2\pi}}(1-\frac{x^2}{2}+\frac{x^4}{8}-\frac{x^6}{48}.......)
+\]
+\[
+\frac{1}{\sqrt{2\pi}}C(kx)=\frac{1}{\sqrt{2\pi}}\left(1-\frac{\pi^2k^2x^2}{6}+\frac{\pi^4k^4x^4}{120}+\cdots\right)
+\]
+As the first unequal term, which is the coefficient of $x^2$ will affect the accuracy by the most, we would equalize the coefficient of them.
+\[
+\frac{x^2}{2}=\frac{\pi^2k^2x^2}{6}
+\]
+then
+\[
+\frac{1}{2}=\frac{\pi^2k^2}{6}
+\]
+\[
+k^2=\frac{3}{\pi^2}
+\]
+\[
+k=\frac{\sqrt{3}}{\pi}=c
+\]
+so $c$ is the best coefficient of $C(kx)$
+\end{document}
